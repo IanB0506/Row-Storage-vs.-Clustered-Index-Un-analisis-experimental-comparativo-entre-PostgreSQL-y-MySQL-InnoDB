@@ -1,0 +1,1 @@
+# Row-Storage-vs.-Clustered-Index-Un-analisis-experimental-comparativo-entre-PostgreSQL-y-MySQL-InnoDB
