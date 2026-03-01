@@ -22,23 +22,14 @@ Segundo experimento
 */
 
 -- MySQL (Ejecutar por separado)
-CREATE TABLE tabla_int (id SERIAL PRIMARY KEY, data CHAR(255));
+CREATE TABLE tabla_int (id INT AUTO_INCREMENT PRIMARY KEY, data CHAR(255));
 CREATE TABLE tabla_uuid (id CHAR(36) PRIMARY KEY, data CHAR(255));
 
 -- Insertar 5 millones
--- (Nota: Para UUID, usar INSERT INTO tabla_uuid SELECT UUID(), ...)
 
 -- Medir fragmentación
-SELECT 
-    relname AS nombre_tabla,
-    pg_size_pretty(pg_total_relation_size(relname::regclass)) AS tamaño_total
-FROM pg_stat_user_tables
-WHERE relname = 'tabla_int';
-SELECT 
-    relname AS nombre_tabla,
-    pg_size_pretty(pg_total_relation_size(relname::regclass)) AS tamaño_total
-FROM pg_stat_user_tables
-WHERE relname = 'tabla_uuid';
+SHOW TABLE STATUS LIKE 'tabla_int';
+SHOW TABLE STATUS LIKE 'tabla_uuid';
 
 /*
 --------------------------
@@ -111,4 +102,5 @@ Quinto experiment bonus
 CREATE INDEX idx_ventas_covering ON ventas(region) INCLUDE (total);
 
 -- Re-ejecutar Query B
+
 EXPLAIN (ANALYZE, BUFFERS) SELECT SUM(total), COUNT(*) FROM ventas WHERE region = 'Norte';
